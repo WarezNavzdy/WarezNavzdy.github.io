@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <title>Zmrzlinárna ICEBERT</title>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
   <style>
     :root {
       --main-bg: #fffbea;
@@ -28,7 +31,7 @@
     }
 
     header {
-      padding: 2rem 1rem;
+      padding: 1rem 1rem;
       background-color: var(--accent);
     }
 
@@ -44,15 +47,21 @@
     }
 
     .header-content img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
+      width: 200px;
+      height: 200px;
+      border-radius: 5%;
     }
 
     .header-content h1 {
-      font-size: 2.5rem;
-      margin: 0;
-    }
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  font-style: italic;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+
 
     section {
       padding: 3rem 1rem;
@@ -78,36 +87,67 @@
     }
 
     .sortiment {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.5rem;
-    }
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
 
-    .icecream-card {
-      background-color: var(--card-bg);
-      border-radius: 1rem;
-      padding: 1rem;
-      text-align: center;
-      transition: transform 0.3s ease, background-color 0.3s;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
+.icecream-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: var(--card-bg);
+  border-radius: 1.5rem;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  position: relative;
+  height: 100%;
+  transition: transform 0.3s ease;
+}
 
-    .icecream-card:hover {
-      transform: scale(1.05);
-      background-color: var(--hover);
-    }
+.icecream-card:hover {
 
-    .icecream-card img {
-      width: 100%;
-      max-height: 150px;
-      object-fit: cover;
-      border-radius: 0.5rem;
-      margin-bottom: 1rem;
-    }
+}
 
-    .icecream-card h3 {
-      margin-bottom: 0.5rem;
-    }
+.icecream-card img {
+  max-height: 180px;
+  object-fit: contain;
+  margin: 0 auto 1rem auto;
+  transition: transform 0.3s ease;
+}
+
+.icecream-card:hover img {
+  transform: scale(1.2);
+}
+
+.icecream-card h3 {
+  margin: 0.5rem 0 0.2rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.icecream-card p {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0;
+}
+
+.badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #f39c12;
+  color: white;
+  font-size: 0.7rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  font-weight: bold;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+}
+
+
+
 
     .location {
       text-align: center;
@@ -136,13 +176,77 @@
       background-color: var(--accent);
       margin-top: 2rem;
     }
+    .map-wrapper {
+  padding: 0.1rem;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+#gta-map {
+  width: 900px;
+  max-width: 100%;
+  height: 550px;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.leaflet-container {
+  background: url("mapaokolo.jpg") repeat center center !important;
+  background-size: cover;
+}
+
+@media (max-width: 600px) {
+  .header-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 0;
+  }
+
+  .header-content img {
+    width: 150px;
+    height: 150px;
+  }
+
+  .header-content h1 {
+    font-size: 1.8rem;
+  }
+
+  .intro {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .intro img {
+    max-width: 100%;
+  }
+
+  #gta-map {
+    width: 100% !important;
+    height: 300px;
+  }
+
+  .icecream-card img {
+    max-height: 140px;
+  }
+
+  .icecream-card h3 {
+    font-size: 1rem;
+  }
+
+  .icecream-card p {
+    font-size: 0.85rem;
+  }
+}
+
+
   </style>
 </head>
 <body>
 
   <header>
     <div class="header-content">
-      <img src="logo.png" alt="Logo Zmrzlinárny ICEBERT" />
+      <img src="logo.png" alt="Logo Zmrzlinárnssdsy ICEBERT" />
       <h1>Zmrzlinárna ICEBERT</h1>
     </div>
   </header>
@@ -150,46 +254,41 @@
   <section class="intro">
     <div class="intro-text">
       <h2>O nás</h2>
-      <p>Vítej v království zmrzliny! ICEBERT vyrábí poctivou řemeslnou zmrzlinu z čerstvých surovin. Každý kopeček je jako pohlazení na duši. Přijď ochutnat pravou chuť léta!</p>
+      <p>Vítej v království zmrzliny! Jako ICEBERT se snažíme vyrábět, co nejkvalinější a nejtradičnější zmrzlinu, abychom ji mohli dostat až k Vám na klacku. <b>Osvěží po tělě, zahřeje na duši!</b></p>
     </div>
-    <img src="img/zmrzlina.jpg" alt="Zmrzlina" />
+    <div style="text-align: center;">
+        <img src="avatar.jpg" alt="Zmrzlina" style="max-width: 350px; width: 100%; border-radius: 1rem;" />
+        <p style="font-style: italic;"><b>Albert Goodbern:</b> Zakladatel zmrzlinárny</p>
+      </div>
+      
   </section>
 
   <section>
-    <h2>Naše příchutě</h2>
+    <h2>Náš sortiment</h2>
     <div class="sortiment">
-      <div class="icecream-card">
-        <img src="img/vanilka.jpg" alt="Vanilková harmonie">
-        <h3>Vanilková harmonie</h3>
-        <p>Jemná madagaskarská vanilka s kapkou smetany.</p>
-      </div>
-      <div class="icecream-card">
-        <img src="img/cokolada.jpg" alt="Čokoládový sen">
-        <h3>Čokoládový sen</h3>
-        <p>Temná čokoláda s kousky kakaových bobů.</p>
-      </div>
-      <div class="icecream-card">
-        <img src="img/jahoda.jpg" alt="Jahodová louka">
-        <h3>Jahodová louka</h3>
-        <p>Čerstvé jahody a krémový základ.</p>
-      </div>
-      <div class="icecream-card">
-        <img src="img/mango.jpg" alt="Mangová vášeň">
-        <h3>Mangová vášeň</h3>
-        <p>Exotické mango se špetkou limetky.</p>
-      </div>
-      <div class="icecream-card">
-        <img src="img/pistacie.jpg" alt="Pistáciové nebe">
-        <h3>Pistáciové nebe</h3>
-        <p>Italské pistácie, lehce nasládlé.</p>
-      </div>
+        <div class="icecream-card">
+            <span class="badge">Připravujeme</span>
+            <img src="img/vanilla.png" alt="Vanilková nanuk">
+            <h3>ICEBERT VANILLA</h3>
+            <p>Fantasticky smetanový nanuk <b>s pořádnou dávkou vanilky</b> v <b>lískooříškovočokoládové polevě.</b></p>
+          </div>         
+          <div class="icecream-card">
+            <span class="badge">Připravujeme</span>
+            <img src="img/vanillabox.png" alt="Vanilla box">
+            <h3>ICEBERT VANILLA box</h3>
+            <p>Šest nanuků na klacku v jednom velkým packu?! <b>Tak to je prostě harmónie!</b></p>
+          </div>
     </div>
   </section>
 
   <section class="location">
     <h2>Kde nás najdete</h2>
-    <p>Náměstí Sladkostí 12, 123 45 Mlsné město</p>
+    <div class="map-wrapper">
+        <div id="gta-map"></div>
+      </div>
+    <p>Santa Maria Beach 5618, Los Santos</p>
   </section>
+  
 
   <section class="donors">
     <h2>Naši podporovatelé</h2>
@@ -203,24 +302,9 @@
       </thead>
       <tbody>
         <tr>
-          <td>Sladký fond</td>
-          <td>10 000 Kč</td>
-          <td>Výroba nových mrazáků</td>
-        </tr>
-        <tr>
-          <td>Mléčná nadace</td>
-          <td>5 000 Kč</td>
-          <td>Nákup smetany</td>
-        </tr>
-        <tr>
-          <td>Obec Mlsné město</td>
-          <td>8 500 Kč</td>
-          <td>Reklama a propagace</td>
-        </tr>
-        <tr>
-          <td>Kopeček s.r.o.</td>
-          <td>12 000 Kč</td>
-          <td>Design obalů</td>
+          <td>Caleb Griffin</td>
+          <td>1 000 000 Kč</td>
+          <td>Zakoupení domény icebert.ic</td>
         </tr>
       </tbody>
     </table>
@@ -230,5 +314,29 @@
     &copy; 2025 Zmrzlinárna ICEBERT. Všechna práva vyhrazena.
   </footer>
 
+  <script>
+    // Rozměry obrázku mapy, např. 2000x2000px
+    const mapWidth = 2000;
+    const mapHeight = 2000;
+  
+    const bounds = [[0, 0], [mapHeight, mapWidth]];
+  
+    const map = L.map('gta-map', {
+      crs: L.CRS.Simple,
+      minZoom: -2,
+      maxZoom: 2,
+      zoomSnap: 0.5,
+    });
+  
+    const image = L.imageOverlay('mapa.jpg', bounds).addTo(map);
+  
+    map.fitBounds(bounds);
+  
+    // Přidání markeru – souřadnice urči podle testování
+    const marker = L.marker([380, 1132]).addTo(map);
+    map.setView([380, 1132], 0); // souřadnice + zoom (0 = střední přiblížení)
+    marker.bindPopup("<b>Zmrzlinárna ICEBERT</b><br>Santa Maria Beach 5618").openPopup();
+
+  </script>
 </body>
 </html>
