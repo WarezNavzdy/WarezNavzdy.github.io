@@ -1,361 +1,59 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <title>Zmrzlinárna ICEBERT</title>
-  <link rel="shortcut icon" href="logo.png">
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --main-bg: #fffbea;
-      --accent: #f9e79f;
-      --text: #4e4e4e;
-      --card-bg: #fff5cc;
-      --hover: #fff1a8;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Quicksand', sans-serif;
-      background-color: var(--main-bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-
-    header {
-      padding: 1rem 1rem;
-      background-color: var(--accent);
-    }
-
-    .header-content {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      text-align: center;
-    }
-
-    .header-content img {
-      width: 210px;
-      height: 210px;
-      border-radius: 5%;
-    }
-
-    .header-content h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 2.5rem;
-  font-weight: 700;
-  font-style: italic;
-  margin: 0;
-  letter-spacing: 0.5px;
-}
-
-
-
-    section {
-      padding: 3rem 1rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .intro {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 2rem;
-    }
-
-    .intro-text {
-      flex: 1;
-    }
-
-    .intro img {
-      max-width: 350px;
-      width: 100%;
-      border-radius: 1rem;
-    }
-
-    .sortiment {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem;
-}
-
-.icecream-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background-color: var(--card-bg);
-  border-radius: 1.5rem;
-  padding: 1rem;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  position: relative;
-  height: 100%;
-  transition: transform 0.3s ease;
-}
-
-.icecream-card:hover {
-
-}
-
-.icecream-card img {
-  max-height: 180px;
-  object-fit: contain;
-  margin: 0 auto 1rem auto;
-  transition: transform 0.3s ease;
-}
-
-.icecream-card:hover img {
-  transform: scale(1.2);
-}
-
-.icecream-card h3 {
-  margin: 0.5rem 0 0.2rem 0;
-  font-size: 1.1rem;
-  font-weight: 600;
-}
-
-.icecream-card p {
-  font-size: 0.95rem;
-  color: #555;
-  margin: 0;
-}
-
-.badge {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: #f39c12;
-  color: white;
-  font-size: 0.7rem;
-  padding: 0.3rem 0.6rem;
-  border-radius: 999px;
-  font-weight: bold;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.1);
-}
-
-
-
-
-    .location {
-      text-align: center;
-    }
-
-    .donors table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-    }
-
-    .donors th, .donors td {
-      border: 1px solid #ddd;
-      padding: 0.75rem;
-      text-align: left;
-    }
-
-    .donors th {
-      background-color: var(--accent);
-    }
-
-    footer {
-      text-align: center;
-      font-size: 0.9rem;
-      padding: 2rem 1rem;
-      background-color: var(--accent);
-      margin-top: 2rem;
-    }
-    .map-wrapper {
-  padding: 0.1rem;
-  border-radius: 1rem;
-  display: flex;
-  justify-content: center;
-}
-
-#gta-map {
-  width: 900px;
-  max-width: 100%;
-  height: 550px;
-  border-radius: 1rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-
-.leaflet-container {
-  background: url("mapaokolo.jpg") repeat center center !important;
-  background-size: cover;
-}
-
-@media (max-width: 600px) {
-  .header-content {
-    flex-direction: column;
-    text-align: center;
-    gap: 0;
-  }
-
-  .header-content img {
-    width: 150px;
-    height: 150px;
-  }
-
-  .header-content h1 {
-    font-size: 1.8rem;
-  }
-
-  .intro {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .intro img {
-    max-width: 100%;
-  }
-
-  #gta-map {
-    width: 100% !important;
-    height: 300px;
-  }
-
-  .icecream-card img {
-    max-height: 140px;
-  }
-
-  .icecream-card h3 {
-    font-size: 1rem;
-  }
-
-  .icecream-card p {
-    font-size: 0.85rem;
-  }
-}
-
-
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Zmrzlinárna ICEBERT</title>
+<link rel="shortcut icon" href="logo.png">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+<style>
+:root{--main-bg:#fffbea;--accent:#f9e79f;--text:#4e4e4e;--card-bg:#fff5cc;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Quicksand',sans-serif;background:var(--main-bg);color:var(--text);line-height:1.6}
+header{padding:1rem;background:var(--accent)}
+.header-content{max-width:1100px;margin:auto;display:flex;gap:1.5rem;justify-content:center;align-items:center;flex-wrap:wrap;text-align:center}
+.header-content img{width:210px;height:210px;border-radius:5%}
+.header-content h1{font-family:'Playfair Display',serif;font-style:italic;font-size:2.5rem}
+section{padding:3rem 1rem;max-width:1100px;margin:auto}
+.intro{display:flex;gap:2rem;flex-wrap:wrap;align-items:center}
+.intro-text{flex:1}
+.sortiment{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem}
+.icecream-card{background:var(--card-bg);border-radius:1.5rem;padding:1rem;text-align:center;position:relative;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.icecream-card img{max-height:180px;transition:.3s}
+.icecream-card:hover img{transform:scale(1.2)}
+.badge{position:absolute;top:10px;right:10px;background:#f39c12;color:#fff;padding:.3rem .6rem;border-radius:999px;font-size:.7rem}
+.map-wrapper{display:flex;justify-content:center}.leaflet-container{background:url("mapaokolo.jpg") repeat center/cover!important}
+#gta-map{width:900px;max-width:100%;height:550px;border-radius:1rem;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+table{width:100%;border-collapse:collapse;margin-top:1rem}th,td{border:1px solid #ddd;padding:.75rem}th{background:var(--accent)}
+.contact-form{text-align:center}.contact-form p{margin:1rem 0 2rem}.form-wrapper{max-width:800px;margin:auto;background:#fff;border-radius:1rem;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.15)}.form-wrapper iframe{width:100%;border:none}
+footer{text-align:center;padding:2rem;background:var(--accent);margin-top:2rem}
+</style>
 </head>
 <body>
-
-  <header>
-    <div class="header-content">
-      <img src="logo.png" alt="Logo Zmrzlinárnssdsy ICEBERT" />
-      <h1>Zmrzlinárna ICEBERT - PŘIPRAVUJEME!</h1>
-    </div>
-  </header>
-
-  <section class="intro">
-    <div class="intro-text">
-      <h2>O nás</h2>
-      <p>Vítej v království zmrzliny! Jako ICEBERT se snažíme vyrábět, co nejkvalinější a nejtradičnější zmrzlinu, abychom ji mohli dostat až k Vám na klacku. <b>Osvěží po tělě, zahřeje na duši!</b></p>
-    </div>
-    <div style="text-align: center;">
-        <img src="avatar.jpg" alt="Zmrzlina" style="max-width: 350px; width: 100%; border-radius: 1rem;" />
-        <p style="font-style: italic;"><b>Albert Goodbern:</b> Zakladatel zmrzlinárny</p>
-      </div>
-      
-  </section>
-
-  <section>
-    <h2>Náš sortiment</h2>
-    <div class="sortiment">
-        <div class="icecream-card">
-            <span class="badge">Připravujeme</span>
-            <img src="img/vanilla.png" alt="Vanilková nanuk">
-            <h3>ICEBERT VANILLA</h3>
-            <p>Fantasticky smetanový nanuk <b>s pořádnou dávkou vanilky</b> v <b>lískooříškovočokoládové polevě.</b></p>
-          </div>         
-          <div class="icecream-card">
-            <span class="badge">Připravujeme</span>
-            <img src="img/vanillabox.png" alt="Vanilla box">
-            <h3>ICEBERT VANILLA box</h3>
-            <p>Šest nanuků na klacku v jednom velkým packu?! <b>Tak to je prostě harmónie!</b></p>
-          </div>
-    </div>
-  </section>
-
-  <section class="location">
-    <h2>Kde nás najdete</h2>
-    <div class="map-wrapper">
-        <div id="gta-map"></div>
-      </div>
-    <p>Santa Maria Beach 5618, Los Santos</p>
-  </section>
-  
-
-  <section class="donors">
-    <h2>Naši podporovatelé</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Přispěvatel</th>
-          <th>Částka</th>
-          <th>Využito na</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Caleb Griffin</td>
-          <td>1 000 000 Kč</td>
-          <td>Zakoupení domény icebert.ic(plná částka)</td>
-        </tr>
-      </tbody>
-            <tbody>
-        <tr>
-          <td>Andrew Rock</td>
-          <td>1 000 000 Kč</td>
-          <td>Koupě nábytku a tapet do zmrzlinárny(zatim nespecifikovaná částka)</td>
-        </tr>
-      </tbody>
-                  <tbody>
-        <tr>
-          <td>Caleb Griffin</td>
-          <td>1 000 000 Kč</td>
-          <td>Zatím nespecifikováno.</td>
-        </tr>
-      </tbody>
-    </table>
-        <p style="margin-top: 0.5rem;text-align: center;">
-      Děkujeme všem, kteří nás podpořili – bez vás by ICEBERT nemohl být tak hřejivě chladivý, jakým je dnes!<br>
-      Pokud byste nás chtěli podpořit i vy, můžete tak učinit na účet <b>Zmrzlinárna ICEBERT</b>.
-    </p>
-  </section>
-
-  <footer>
-    &copy; 2025 Zmrzlinárna ICEBERT. Všechna práva vyhrazena.
-  </footer>
-
-  <script>
-    // Rozměry obrázku mapy, např. 2000x2000px
-    const mapWidth = 2000;
-    const mapHeight = 2000;
-  
-    const bounds = [[0, 0], [mapHeight, mapWidth]];
-  
-    const map = L.map('gta-map', {
-      crs: L.CRS.Simple,
-      minZoom: -2,
-      maxZoom: 2,
-      zoomSnap: 0.5,
-    });
-  
-    const image = L.imageOverlay('mapa.jpg', bounds).addTo(map);
-  
-    map.fitBounds(bounds);
-  
-    // Přidání markeru – souřadnice urči podle testování
-    const marker = L.marker([380, 1132]).addTo(map);
-    map.setView([380, 1132], 0); // souřadnice + zoom (0 = střední přiblížení)
-    marker.bindPopup("<b>Zmrzlinárna ICEBERT</b><br>Santa Maria Beach 5618").openPopup();
-
-  </script>
-</body>
-</html>
+<header><div class="header-content"><img src="logo.png"><h1>Zmrzlinárna ICEBERT - PŘIPRAVUJEME!</h1></div></header>
+<section class="intro"><div class="intro-text"><h2>O nás</h2><p>Vítej v království zmrzliny! Jako ICEBERT se snažíme vyrábět, co nejkvalinější a nejtradičnější zmrzlinu, abychom ji mohli dostat až k Vám na klacku. <b>Osvěží po tělě, zahřeje na duši!</b></p></div><div style="text-align:center"><img src="avatar.jpg" style="max-width:350px;width:100%;border-radius:1rem"><p><b>Albert Goodbern:</b> Zakladatel zmrzlinárny</p></div></section>
+<section><h2>Náš sortiment</h2><div class="sortiment">
+<div class="icecream-card"><span class="badge">Připravujeme</span><img src="img/vanilla.png"><h3>ICEBERT VANILLA</h3><p>Fantasticky smetanový nanuk <b>s pořádnou dávkou vanilky</b> v <b>lískooříškovočokoládové polevě.</b></p></div>
+<div class="icecream-card"><span class="badge">Připravujeme</span><img src="img/vanillabox.png"><h3>ICEBERT VANILLA box</h3><p>Šest nanuků na klacku v jednom velkým packu?! <b>Tak to je prostě harmónie!</b></p></div>
+</div></section>
+<section><h2>Kde nás najdete</h2><div class="map-wrapper"><div id="gta-map"></div></div><p style="text-align:center">Santa Maria Beach 5618, Los Santos</p></section>
+<section><h2>Naši podporovatelé</h2><table><tr><th>Přispěvatel</th><th>Částka</th><th>Využito na</th></tr><tr><td>Caleb Griffin</td><td>1 000 000 Kč</td><td>Zakoupení domény icebert.ic</td></tr><tr><td>Andrew Rock</td><td>1 000 000 Kč</td><td>Koupě nábytku a tapet</td></tr><tr><td>Caleb Griffin</td><td>1 000 000 Kč</td><td>Zatím nespecifikováno.</td></tr></table></section>
+<section class="contact-form">
+<h2>Kontaktujte nás</h2>
+<p>Máte dotaz nebo nápad? Vyplňte formulář.</p>
+<div class="form-wrapper">
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfz4q1cGks_n3_EiH1LWFv5YROD3GxPYv6C_pccpxqTexTzIQ/viewform?embedded=true" height="1380">Načítání…</iframe>
+</div></section>
+<footer>&copy; 2025 Zmrzlinárna ICEBERT. Všechna práva vyhrazena.</footer>
+<script>
+const bounds=[[0,0],[2000,2000]];
+const map=L.map('gta-map',{crs:L.CRS.Simple,minZoom:-2,maxZoom:2,zoomSnap:.5});
+L.imageOverlay('mapa.jpg',bounds).addTo(map);
+map.fitBounds(bounds);
+L.marker([380,1132]).addTo(map).bindPopup("<b>Zmrzlinárna ICEBERT</b><br>Santa Maria Beach 5618").openPopup();
+map.setView([380,1132],0);
+</script>
+</body></html>
